@@ -1,18 +1,19 @@
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import { connect } from 'react-redux';
 import { MainPath } from '../common/LinkPath';
 import getNewPath from '../common/getNewPath';
-
 import Container from '../components/Container';
 import Main from '../components/Main';
 import Grid from '../components/Grid';
 import Card from '../components/Card';
 import Nav from '../components/Nav';
 import Delete from '../components/Delete';
+import mapDispatchToProps from '../redux/action';
 
 import styles from '../styles/Home.module.scss';
 
-export default function Home() {
+const Home = (props) => {
   const router = useRouter();
 
   return (
@@ -59,4 +60,9 @@ export default function Home() {
       </Container>
     </>
   );
-}
+};
+
+export default connect(
+  (state) => state,
+  mapDispatchToProps,
+)(Home);
