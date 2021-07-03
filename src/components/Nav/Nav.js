@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import { MainPath } from '../../common/LinkPath';
 import styles from './Nav.module.scss';
 
 const Nav = ({ children, className, ...rest }) => {
@@ -9,11 +11,11 @@ const Nav = ({ children, className, ...rest }) => {
 
   return (
     <header className={mainClassName} {...rest}>
-      <a href="" className="logo">Contact List</a>
+      <Link href={MainPath.home} className="logo">CL</Link>
       <input className="menu-btn" type="checkbox" id="menu-btn" />
       <label className="menu-icon" htmlFor="menu-btn"><span className="navicon" /></label>
       <ul className="menu">
-        <li><a href="#work">+ Add Contact</a></li>
+        <li><Link href={MainPath.add}>+ Add Contact</Link></li>
       </ul>
     </header>
   );

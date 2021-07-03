@@ -48,16 +48,15 @@
     border: 1px solid #eaeaea;
     border-radius: 10px;
 
-  &:hover,
-  &:focus,
-  &:active {
-    background-color: $color-delete;
-    color: white;
-    border-color: $color-delete;
-    cursor: pointer;
-  }
-  }
-  @media (max-width: 600px) {
-    width: 100%;
+    &:hover {
+      background-color: $color-delete;
+      color: white;
+      border-color: $color-delete;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      width: 100%;
+    }
   }
 }

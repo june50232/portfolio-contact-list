@@ -1,4 +1,7 @@
+import { useRouter } from 'next/router';
 import Head from 'next/head';
+import { MainPath } from '../common/LinkPath';
+import { getNewPath } from '../common/getNewPath';
 
 import Container from '../components/Container';
 import Main from '../components/Main';
@@ -10,6 +13,8 @@ import Delete from '../components/Delete';
 import styles from '../styles/Home.module.scss';
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <>
       <Nav />
@@ -35,15 +40,19 @@ export default function Home() {
           </div>
 
           <Grid>
-            <Card>
-              <>
-                <a href="https://nextjs.org/docs">
+            <>
+              <Card
+                onClick={() => {
+                  router.push(getNewPath(MainPath.edit, { id: '' }));
+                }}
+              >
+                <>
                   <h2>Joe &rarr;</h2>
                   <p>F2E</p>
-                </a>
-                <Delete>delete</Delete>
-              </>
-            </Card>
+                </>
+              </Card>
+              <Delete>delete</Delete>
+            </>
           </Grid>
         </Main>
 

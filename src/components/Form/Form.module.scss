@@ -1,0 +1,94 @@
+@import "../../styles/settings/__settings";
+$height: 40px;
+$color-submit: green;
+
+.container {
+  margin: 2rem auto;
+  max-width: 700px;
+}
+
+.form {
+  margin: auto 0 2em 0;
+
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+.fieldContainer {
+  overflow: auto;
+}
+
+.field {
+  display: block;
+  border: 1px solid #BDBDBD;
+  float: left;
+  width: 100%;
+
+  label {
+    display: block;
+    font-size: 1.2rem;
+    padding: 1.5rem 2rem 0;
+    text-transform: uppercase;
+    color: #999;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  input,
+  textarea {
+    display: block;
+    width: 100%;
+    padding: .5rem 2rem 1.5rem;
+    font-size: 1.8rem;
+    border: 0;
+    color: #212121;
+    outline: 0;
+  }
+
+  textarea {
+    min-height: 150px;
+    resize:vertical;
+  }
+}
+
+.tnb {
+  border-top: 0;
+}
+
+.half {
+  width: 50%;
+  @media (max-width: 600px) {
+    width: 100%;
+  }
+}
+
+.last {
+  @media (min-width: 600px) {
+    border-left: 0;
+  }
+}
+
+.submit {
+  text-align: center;
+  float: left;
+  font-weight: 700;
+  letter-spacing: 1px;
+  min-width: 600px;
+  max-width: 800px;
+  margin-top: 3rem;
+    cursor: pointer;
+    padding: 1.5rem;
+  background-color: $color-submit;
+  color: white;
+    text-decoration: none;
+    border: 1px solid $color-submit;
+    border-radius: 10px;
+
+    @media (max-width: 600px) {
+      width: 100%;
+    }
+
+}
