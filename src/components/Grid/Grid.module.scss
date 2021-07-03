@@ -4,13 +4,12 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  
+  min-width: 600px;
   max-width: 800px;
   margin-top: 3rem;
   
   @media (max-width: 600px) {
     width: 100%;
-    flex-direction: column;
   }
 
 }

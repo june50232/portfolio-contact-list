@@ -5,6 +5,7 @@ import Main from '../components/Main';
 import Grid from '../components/Grid';
 import Card from '../components/Card';
 import Nav from '../components/Nav';
+import Delete from '../components/Delete';
 
 import styles from '../styles/Home.module.scss';
 
@@ -29,12 +30,19 @@ export default function Home() {
             Contact List
           </h1>
 
+          <div className={styles.sort}>
+            <a>Sort</a>
+          </div>
+
           <Grid>
             <Card>
-              <a href="https://nextjs.org/docs">
-                <h2>Joe &rarr;</h2>
-                <p>F2E</p>
-              </a>
+              <>
+                <a href="https://nextjs.org/docs">
+                  <h2>Joe &rarr;</h2>
+                  <p>F2E</p>
+                </a>
+                <Delete>delete</Delete>
+              </>
             </Card>
           </Grid>
         </Main>
