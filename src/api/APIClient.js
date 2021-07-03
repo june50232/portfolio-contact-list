@@ -107,14 +107,11 @@ export default class APIClient {
     }
 
     if (resp.status >= 200 && resp.status < 300) {
-      decreaseLoaderCount()
       return resp
     }
 
     if (resp.status === 401) {
         resp = { ...resp, reload: true }
-
-      decreaseLoaderCount()
     }
     //
     // if (resp.status === 403) {

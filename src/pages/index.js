@@ -122,8 +122,10 @@ const Home = (props) => {
 Home.getInitialProps = async (ctx) => {
   let result = null;
   const resp = await getData().then((resp) => {
+    // console.log('getdate resp ====', resp);
     result = resp.contacts;
   });
+  console.log('getInitialProps ===', result);
   return { contacts: result };
 };
 
