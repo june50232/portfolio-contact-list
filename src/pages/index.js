@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { connect } from 'react-redux';
+import { useState } from 'react';
 import { MainPath } from '../common/LinkPath';
 import getNewPath from '../common/getNewPath';
 import Container from '../components/Container';
@@ -31,8 +32,42 @@ const FAKE_DATA = [
   },
 ];
 
+const SORT_WAY = {
+  aToB: '1',
+  bToA: '2',
+};
+
 const Home = (props) => {
   const router = useRouter();
+
+  const [
+    isSortWayAToB,
+    setSortWay,
+  ] = useState(true);
+
+  const sortFn = (defaultValues) => {
+    const ori = [].concat(defaultValues);
+    ori.sort((a, b) => {
+      const keyA = a.first_name;
+      const keyB = b.first_name;
+      // Compare the 2 dates
+      if (keyA < keyB) return isSortWayAToB ? -1 : 1;
+      if (keyA > keyB) return isSortWayAToB ? 1 : -1;
+      return 0;
+    });
+    return ori;
+  };
+
+  const [
+    data,
+    sortData,
+  ] = useState(sortFn(props.contacts || []));
+
+  const onSort = () => {
+    const ori = sortFn(data);
+    sortData(ori);
+    setSortWay(!isSortWayAToB);
+  };
 
   return (
     <>
@@ -54,11 +89,14 @@ const Home = (props) => {
             Contact List
           </h1>
 
-          <div className={styles.sort}>
+          <div
+            className={styles.sort}
+            onClick={onSort}
+          >
             <a>Sort</a>
           </div>
 
-          {(props.contacts || []).map((contact, index) => (
+          {(data || []).map((contact, index) => (
             <Grid key={contact.id}>
               <>
                 <Card
