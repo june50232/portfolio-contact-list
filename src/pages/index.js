@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { MainPath } from '../common/LinkPath';
-import { getNewPath } from '../common/getNewPath';
+import getNewPath from '../common/getNewPath';
 
 import Container from '../components/Container';
 import Main from '../components/Main';
@@ -43,7 +43,7 @@ export default function Home() {
             <>
               <Card
                 onClick={() => {
-                  router.push(getNewPath(MainPath.edit, { id: '' }));
+                  router.push(getNewPath(MainPath.edit, { id: '123' }));
                 }}
               >
                 <>

@@ -1,19 +1,19 @@
 import Head from 'next/head';
 
-import Container from '../components/Container';
-import Main from '../components/Main';
-import Nav from '../components/Nav';
+import Container from '../../components/Container';
+import Main from '../../components/Main';
+import Nav from '../../components/Nav';
 
-import styles from '../styles/Home.module.scss';
-import Form from '../components/Form/Form';
+import styles from '../../styles/Home.module.scss';
+import Form from '../../components/Form/Form';
 
-export default function Add() {
+export default function Id() {
   return (
     <>
       <Nav />
       <Container>
         <Head>
-          <title>Contact List Add</title>
+          <title>Contact List Edit</title>
           <link rel="icon" href="/favicon.ico" />
 
           <meta
@@ -25,11 +25,10 @@ export default function Add() {
         <Main>
 
           <h1 className={styles.title}>
-            Add Contact
+            Edit Contact
           </h1>
 
-          <Form
-          />
+          <Form />
         </Main>
 
       </Container>
