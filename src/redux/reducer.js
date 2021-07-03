@@ -12,7 +12,9 @@ const reducer = (state = {
     onClear: () => {},
     onShowClear: true,
   },
-  count: 1,
+  loaderCount: {
+    count: 1,
+  },
 }, action) => {
   switch (action.type) {
     case 'ADD_NOTIFICATION':

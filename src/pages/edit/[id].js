@@ -46,10 +46,8 @@ const getData = (id) => new MainAPI().getContact(id).then((result) => result);
 Id.getInitialProps = async ({ req, query: { id } }) => {
   let result = null;
   const resp = await getData(id).then((resp) => {
-    console.log('getdate resp ====', resp);
     result = (resp.contact || {}).data || null;
   });
-  console.log('getInitialProps ===', result);
   return {
     contact: result,
     id,

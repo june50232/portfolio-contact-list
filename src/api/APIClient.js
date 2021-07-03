@@ -1,5 +1,6 @@
 import axios from 'axios'
-// import { getStore } from 'src/store/index'
+import store from '../redux/store'
+import actions from '../redux/action'
 // import {
 //   increaseLoaderCount,
 //   decreaseLoaderCount,
@@ -33,7 +34,8 @@ export default class APIClient {
    * @returns {Promise.<TResult>}
    */
   get(apiPath, params, token, skipFail = false, others = {}, useLoader = true) {
-    // if (getStore().getState().loaderCount.count < 20 && useLoader) { getStore().dispatch(increaseLoaderCount()) }
+    // console.log('store.getState()===', store.getState())
+    // if (store.getState().utilities.loaderCount.count < 20 && useLoader) { store.dispatch(increaseLoaderCount()) }
     const url = this.API_BASE_URL + apiPath
     return axios.get(url, {
       timeout: 30000,
@@ -45,7 +47,7 @@ export default class APIClient {
   }
 
   patch(apiPath, params, token) {
-    // if (getStore().getState().loaderCount.count < 20) { getStore().dispatch(increaseLoaderCount()) }
+    // if (store.getState().utilities.loaderCount.count < 20) { store.dispatch(increaseLoaderCount()) }
     const url = this.API_BASE_URL + apiPath
     return axios.patch(url, params, {
       timeout: 30000,
@@ -55,7 +57,7 @@ export default class APIClient {
   }
 
   put(apiPath, params, token) {
-    // if (getStore().getState().loaderCount.count < 20) { getStore().dispatch(increaseLoaderCount()) }
+    // if (store.getState().loaderCount.count < 20) { store.dispatch(increaseLoaderCount()) }
     const url = this.API_BASE_URL + apiPath
     return axios.put(url, params, {
       timeout: 60000,
@@ -65,7 +67,7 @@ export default class APIClient {
   }
 
   post(apiPath, params, token) {
-    // if (getStore().getState().loaderCount.count < 20) { getStore().dispatch(increaseLoaderCount()) }
+    // if (store.getState().utilities.loaderCount.count < 20) { store.dispatch(increaseLoaderCount()) }
     const url = this.API_BASE_URL + apiPath
     return axios.post(url, params, {
       timeout: 120000,
@@ -75,7 +77,7 @@ export default class APIClient {
   }
 
   postFile(apiPath, params, token) {
-    // if (getStore().getState().loaderCount.count < 20) { getStore().dispatch(increaseLoaderCount()) }
+    // if (store.getState().utilities.loaderCount.count < 20) { store.dispatch(increaseLoaderCount()) }
     const url = this.API_BASE_URL + apiPath
     return axios.post(url, params, {
       timeout: 120000,
@@ -88,7 +90,7 @@ export default class APIClient {
   }
 
   del(apiPath, params, token) {
-    // if (getStore().getState().loaderCount.count < 20) { getStore().dispatch(increaseLoaderCount()) }
+    // if (store.getState().utilities.loaderCount.count < 20) { store.dispatch(increaseLoaderCount()) }
     const url = this.API_BASE_URL + apiPath
 
     return axios.delete(url, {
@@ -101,16 +103,19 @@ export default class APIClient {
 
   checkResponse = (resp, skipFail, useLoader = true) => {
     if (resp === undefined) {
-      resp = { data: { message: '連線請求失敗或逾時！' } }
+      resp = { data: { message: 'error connect' } }
     }
 
     if (resp.status >= 200 && resp.status < 300) {
+      decreaseLoaderCount()
       return resp
     }
 
-    // if (resp.status === 401) {
-    //     resp = { ...resp, reload: true }
-    // }
+    if (resp.status === 401) {
+        resp = { ...resp, reload: true }
+
+      decreaseLoaderCount()
+    }
     //
     // if (resp.status === 403) {
     //   if (resp.data.code === 40301) {
@@ -144,7 +149,6 @@ export default class APIClient {
     //   getStore().dispatch(addNotification(<div><h3>很抱歉! 系統目前異常</h3><h4 className="text-justify">請您稍後再使用本網站，並建議您重整網頁後再進行操作，可能會需要您重新輸入資料，請見諒。</h4></div>, 'dialogError'))
     // }
 
-    // 新增 'skipFail' 參數，因為 slider 如果沒有 path 的設定，在 get 時，會回傳 422，造成 server 在 promise.all 時連同其它 api 都 fail.
-    return skipFail ? Promise.resolve(resp) : Promise.reject(resp)
+    return Promise.resolve(resp)
   }
 }

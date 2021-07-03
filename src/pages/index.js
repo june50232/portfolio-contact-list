@@ -15,27 +15,7 @@ import MainAPI from '../api/MainAPI';
 
 import styles from '../styles/Home.module.scss';
 
-const FAKE_DATA = [
-  {
-    id: 1,
-    first_name: 'Anakin',
-    last_name: 'Skywalker',
-    job: 'Jedi Knight',
-    description: 'The Chosen one',
-  },
-  {
-    id: 2,
-    first_name: 'Boba',
-    last_name: 'Fett',
-    job: 'Bounty Hunter',
-    description: 'Son of Jango Fett',
-  },
-];
-
-const SORT_WAY = {
-  aToB: '1',
-  bToA: '2',
-};
+const getData = () => new MainAPI().getContacts().then((result) => result);
 
 const Home = (props) => {
   const router = useRouter();
@@ -69,6 +49,12 @@ const Home = (props) => {
     setSortWay(!isSortWayAToB);
   };
 
+  const onRenew = () => {
+    getData().then((resp) => {
+      sortData(sortFn(resp.contacts || []));
+    });
+  };
+
   return (
     <>
       <Nav />
@@ -96,7 +82,7 @@ const Home = (props) => {
             <a>Sort</a>
           </div>
 
-          {(data || []).map((contact, index) => (
+          {!props.utilities.confirm.open && (data || []).map((contact, index) => (
             <Grid key={contact.id}>
               <>
                 <Card
@@ -118,6 +104,8 @@ const Home = (props) => {
                 </Card>
                 <Delete
                   id={contact.id}
+                  name={`${contact.first_name} ${contact.last_name}`}
+                  onSuccessDelete={onRenew}
                 >
                   delete
                 </Delete>
@@ -131,19 +119,13 @@ const Home = (props) => {
   );
 };
 
-const getData = () => new MainAPI().getContacts().then((result) => result);
-
 Home.getInitialProps = async (ctx) => {
   let result = null;
   const resp = await getData().then((resp) => {
-    // console.log('getdate resp ====', resp);
     result = resp.contacts;
   });
-  console.log('getInitialProps ===', result);
   return { contacts: result };
 };
-
-// Home.getInitialProps = (ctx) => ({ contacts: getData().then((resp) => resp) });
 
 export default connect(
   (state) => state,

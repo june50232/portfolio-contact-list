@@ -1,7 +1,11 @@
+import { connect } from 'react-redux';
 import styles from './Delete.module.scss';
 import MainAPI from '../../api/MainAPI';
+import mapDispatchToProps from '../../redux/action';
 
-const Delete = ({ children, className, ...rest }) => {
+const Delete = ({
+  children, className, actions, name, onSuccessDelete, ...rest
+}) => {
   let deleteClassName = styles.delete;
 
   if (className) {
@@ -9,7 +13,12 @@ const Delete = ({ children, className, ...rest }) => {
   }
 
   const onDelete = () => {
-    new MainAPI().deleteContact(rest.id);
+    actions.confirmToDo(`delete ${name}?`, () => {
+      new MainAPI().deleteContact(rest.id).then((resp) => {
+        console.log('getdate resp ====', resp);
+        onSuccessDelete();
+      });
+    });
   };
 
   return (
@@ -23,4 +32,7 @@ const Delete = ({ children, className, ...rest }) => {
   );
 };
 
-export default Delete;
+export default connect(
+  (state) => state,
+  mapDispatchToProps,
+)(Delete);

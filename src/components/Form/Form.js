@@ -2,11 +2,16 @@ import { Formik, Field } from 'formik';
 import { useState, useRef } from 'react';
 import * as Yup from 'yup';
 import { connect } from 'react-redux';
+import { useRouter } from 'next/router';
 import styles from './Form.module.scss';
 import MainAPI from '../../api/MainAPI';
 import mapDispatchToProps from '../../redux/action';
+import { MainPath } from '../../common/LinkPath';
 
-const Form = ({ children, className, ...rest }) => {
+const Form = ({
+  children, className, actions, ...rest
+}) => {
+  const router = useRouter();
   let formClassName = styles.container;
   const initValues = rest.isEdit ? rest.contact : {
     first_name: '',
@@ -43,11 +48,13 @@ const Form = ({ children, className, ...rest }) => {
   // const formRef = useRef(null);
 
   const formSubmit = (values, { setSubmitting, setStatus }) => {
-    const api = !rest.isEdit ? new MainAPI().postContact(values) : new MainAPI().patchContact(rest.id, values);
+    const api = !rest.isEdit ? new MainAPI().postContact({ contact: values }) : new MainAPI().patchContact(rest.id, { contact: values });
     api.then((r) => {
-      if (r.code == 200) {
-        setSubmitting(false);
-      }
+      console.log('test');
+      setSubmitting(false);
+      actions.confirmToDo('submit successfully', () => {
+        router.push(MainPath.home);
+      });
     }, (e) => {
       console.log('[error]', e);
       setStatus(false);

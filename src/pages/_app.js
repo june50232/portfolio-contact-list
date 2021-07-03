@@ -3,6 +3,8 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import { createWrapper } from 'next-redux-wrapper';
 import store from '../redux/store';
+import Util from '../components/Util';
+import actions from '../redux/action';
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
@@ -15,10 +17,14 @@ class MyApp extends App {
   render() {
     // Information that was returned  from 'getInitialProps' are stored in the props i.e. pageProps
     const { Component, pageProps } = this.props;
-
     return (
       <Provider store={store}>
-        <Component {...pageProps} />
+        <Component {...pageProps} actions={actions} />
+        {/* <Confirm /> */}
+        <Util
+          {...pageProps}
+          actions={actions}
+        />
       </Provider>
     );
   }
