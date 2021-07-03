@@ -1,0 +1,3 @@
+Quiz2.
+
+code2, cause innerHTML means "{animal}" part of HTML, that could print correct clicked html
