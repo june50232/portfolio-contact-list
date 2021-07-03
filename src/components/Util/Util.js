@@ -26,11 +26,11 @@ const Util = ({
         >
           <div>
             <h3>{utilities.confirm.message}</h3>
-            <button
-              onClick={onConfirm}
-            >
-              ok
-            </button>
+            {/* <button */}
+            {/*  onClick={onConfirm} */}
+            {/* > */}
+            {/*  ok */}
+            {/* </button> */}
           </div>
         </div>
       )}

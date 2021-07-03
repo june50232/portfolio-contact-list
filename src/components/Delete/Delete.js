@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import styles from './Delete.module.scss';
 import MainAPI from '../../api/MainAPI';
 import mapDispatchToProps from '../../redux/action';
+import { MainPath } from '../../common/LinkPath';
 
 const Delete = ({
   children, className, actions, name, onSuccessDelete, ...rest
@@ -13,12 +14,20 @@ const Delete = ({
   }
 
   const onDelete = () => {
-    actions.confirmToDo(`delete ${name}?`, () => {
+    actions.confirmToDo(`delete ${name}`, () => {
       new MainAPI().deleteContact(rest.id).then((resp) => {
         console.log('getdate resp ====', resp);
         onSuccessDelete();
       });
     });
+    setTimeout(() => {
+      rest.utilities.confirm.onConfirm();
+      actions.clearConfirm();
+      new MainAPI().deleteContact(rest.id).then((resp) => {
+        console.log('getdate resp ====', resp);
+        onSuccessDelete();
+      });
+    }, 3500);
   };
 
   return (

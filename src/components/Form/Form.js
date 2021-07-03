@@ -55,6 +55,11 @@ const Form = ({
       actions.confirmToDo('submit successfully', () => {
         router.push(MainPath.home);
       });
+      setTimeout(() => {
+        rest.utilities.confirm.onConfirm();
+        actions.clearConfirm();
+        router.push(MainPath.home);
+      }, 3500);
     }, (e) => {
       console.log('[error]', e);
       setStatus(false);
