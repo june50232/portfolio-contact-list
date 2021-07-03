@@ -1,11 +1,14 @@
 import { Formik, Field } from 'formik';
 import { useState, useRef } from 'react';
 import * as Yup from 'yup';
+import { connect } from 'react-redux';
 import styles from './Form.module.scss';
+import MainAPI from '../../api/MainAPI';
+import mapDispatchToProps from '../../redux/action';
 
 const Form = ({ children, className, ...rest }) => {
   let formClassName = styles.container;
-  const initValues = {
+  const initValues = rest.isEdit ? rest.contact : {
     first_name: '',
     last_name: '',
     job: '',
@@ -13,22 +16,22 @@ const Form = ({ children, className, ...rest }) => {
   };
   const SCHEMA = Yup.object().shape({
     first_name: Yup.string()
-      .strict(false)
+      // .strict(false)
       .required('Please provide first name')
       .trim('Include spaces before and after the field is not allowed')
       .nullable(),
     last_name: Yup.string()
-      .strict(false)
+      // .strict(false)
       .required('Please provide last name')
       .trim('Include spaces before and after the field is not allowed')
       .nullable(),
     job: Yup.string()
-      .strict(false)
+      // .strict(false)
       .required('Please provide job title')
       .trim('Include spaces before and after the field is not allowed')
       .nullable(),
     description: Yup.string()
-      .strict(false)
+      // .strict(false)
       .required('Please provide job description')
       .trim('Include spaces before and after the field is not allowed')
       .nullable(),
@@ -37,10 +40,23 @@ const Form = ({ children, className, ...rest }) => {
   if (className) {
     formClassName = `${formClassName} ${className}`;
   }
-  const formRef = useRef(null);
+  // const formRef = useRef(null);
 
-  const formSubmit = () => {
-
+  const formSubmit = (values, { setSubmitting, setStatus }) => {
+    const api = !rest.isEdit ? new MainAPI().postContact(values) : new MainAPI().patchContact(rest.id, values);
+    api.then((r) => {
+      if (r.code == 200) {
+        setSubmitting(false);
+      }
+    }, (e) => {
+      console.log('[error]', e);
+      setStatus(false);
+      setSubmitting(false);
+    }).catch((e) => {
+      console.log('[error]', e);
+      setStatus(false);
+      setSubmitting(false);
+    });
   };
 
   const filtered = (raw, allowed) => Object.keys(raw)
@@ -57,7 +73,7 @@ const Form = ({ children, className, ...rest }) => {
         enableReinitialize
         validationSchema={SCHEMA}
         onSubmit={formSubmit}
-        ref={formRef}
+        // ref={formRef}
       >
         {({
           setSubmitting,
@@ -80,7 +96,6 @@ const Form = ({ children, className, ...rest }) => {
                 >
                   First name
                 </label>
-                {console.log('errors ===', errors, touched)}
                 <Field
                   type="text"
                   id="firstName"
@@ -124,7 +139,8 @@ const Form = ({ children, className, ...rest }) => {
                 />
               </div>
             </div>
-            {Object.values(filtered(errors, touched)).map((o, i) => <p className="text-danger" key={i}>{o}</p>)}
+            {console.log('error ===', Object.values(filtered(errors, touched)))}
+            {Object.values(filtered(errors, touched)).map((o, i) => <p className={styles.error} key={i}>{o}</p>)}
 
             <a
               href="javascript:;"
@@ -141,4 +157,7 @@ const Form = ({ children, className, ...rest }) => {
   );
 };
 
-export default Form;
+export default connect(
+  (state) => state,
+  mapDispatchToProps,
+)(Form);

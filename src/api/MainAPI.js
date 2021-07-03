@@ -18,7 +18,12 @@ export default class MainAPI {
   }
 
   getContacts() {
-    return this.client.get('/api/contacts', '', null).then(resp => ({ cintacts: resp.data }))
+    return this.client.get('/api/contacts', '', null).then(resp => {
+        // console.log('resp ===', resp)
+        return {
+            contacts: ((resp || {}).data || {}).data
+        }
+    })
   }
 
   postContact(data) {

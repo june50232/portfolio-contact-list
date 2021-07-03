@@ -62,6 +62,7 @@ $color-submit: green;
   width: 50%;
   @media (max-width: 600px) {
     width: 100%;
+    border: 1px solid #BDBDBD;
   }
 }
 
@@ -91,4 +92,8 @@ $color-submit: green;
       width: 100%;
     }
 
+}
+
+.error {
+  color: red
 }

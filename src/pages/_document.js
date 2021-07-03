@@ -1,22 +1,21 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document'
+import Document, { Head, Main, NextScript } from 'next/document';
 
-class MyDocument extends Document {
-  static async getInitialProps(ctx) {
-    const initialProps = await Document.getInitialProps(ctx);
-    return { ...initialProps };
-  }
-
+class CustomDocument extends Document {
   render() {
     return (
-      <Html lang="en">
-        <Head/>
+      <html lang="pt-BR">
+        <Head>
+          <meta charSet="utf-8" />
+          <meta name="viewport" content="width=device-width,initial-scale=1" />
+          <link rel="stylesheet" href="/_next/static/style.css" />
+        </Head>
         <body>
           <Main />
           <NextScript />
         </body>
-      </Html>
+      </html>
     );
   }
 }
 
-export default MyDocument;
+export default CustomDocument;

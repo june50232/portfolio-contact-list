@@ -6,8 +6,9 @@ import Nav from '../../components/Nav';
 
 import styles from '../../styles/Home.module.scss';
 import Form from '../../components/Form/Form';
+import MainAPI from '../../api/MainAPI';
 
-export default function Id() {
+export default function Id(props) {
   return (
     <>
       <Nav />
@@ -28,10 +29,29 @@ export default function Id() {
             Edit Contact
           </h1>
 
-          <Form />
+          <Form
+            isEdit
+            id={props.id}
+            contact={props.contact}
+          />
         </Main>
 
       </Container>
     </>
   );
 }
+
+const getData = (id) => new MainAPI().getContact(id).then((result) => result);
+
+Id.getInitialProps = async ({ req, query: { id } }) => {
+  let result = null;
+  const resp = await getData(id).then((resp) => {
+    console.log('getdate resp ====', resp);
+    result = (resp.contact || {}).data || null;
+  });
+  console.log('getInitialProps ===', result);
+  return {
+    contact: result,
+    id,
+  };
+};
