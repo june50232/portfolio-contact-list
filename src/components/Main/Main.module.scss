@@ -1,8 +1,6 @@
 .main {
   padding: 5rem 0.5rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  position: absolute;
+  left: 0;
+  top: 0;
 }

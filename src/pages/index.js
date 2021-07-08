@@ -58,30 +58,31 @@ const Home = (props) => {
   return (
     <>
       <Nav />
-      <Container>
-        <Head>
-          <title>Contact List</title>
-          <link rel="icon" href="/favicon.ico" />
 
-          <meta
-            name="description"
-            content="Next.js app"
-          />
-        </Head>
+      <Head>
+        <title>Contact List</title>
+        <link rel="icon" href="/favicon.ico" />
 
-        <Main>
+        <meta
+          name="description"
+          content="Next.js app"
+        />
+      </Head>
 
-          <h1 className={styles.title}>
-            Contact List
-          </h1>
+      <Main>
+        <h1 className={styles.title}>
+          Contact List
+        </h1>
+        {/* <Container> */}
+        <div
+          className={styles.sort}
+          onClick={onSort}
+        >
+          <a>Sort</a>
+        </div>
 
-          <div
-            className={styles.sort}
-            onClick={onSort}
-          >
-            <a>Sort</a>
-          </div>
-
+        {/* </Container> */}
+        <Container>
           {!props.utilities.confirm.open && (data || []).map((contact, index) => (
             <Grid key={contact.id}>
               <>
@@ -99,7 +100,7 @@ const Home = (props) => {
                       &rarr;
                     </h2>
                     <p>{contact.job}</p>
-                    <p>{contact.description}</p>
+                    <p className="description">{contact.description}</p>
                   </>
                 </Card>
                 <Delete
@@ -112,9 +113,8 @@ const Home = (props) => {
               </>
             </Grid>
           ))}
-        </Main>
-
-      </Container>
+        </Container>
+      </Main>
     </>
   );
 };
